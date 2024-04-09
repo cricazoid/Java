@@ -1,5 +1,8 @@
 package util;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import beans.Product;
@@ -14,30 +17,25 @@ public class UtilLista {
      *This method returns the list from the file   
      */
     public List<Product> retornaLista() {
-		FileRendler fileRendler = new FileRendler();		
-		return fileRendler.leArquivo();
+		//FileRendler fileRendler = new FileRendler();		
+		return new FileRendler().leArquivo();
 	}
     /*Método recebe e ordena uma lista de acordo com o usuario
      *This method returns the list from the file   
      */
     public void ordenaLista(List<Product> list, int sorttype) {
-    	switch (sorttype) {
-		  case 1: {
-	        list.sort(mcomp.porNome());
-	        break;
-		  }
-		  case 2: {
-	        list.sort(mcomp.porPreco());
-	        break;
-		  }
-		  case 3: {
-            list.sort(mcomp.porNomeReverso());
-            break;
-	     }
-	     case 4: {
-           list.sort(mcomp.porPrecoReverso());
-           break;
-	     }
+    	HashMap<Integer,String> mapaOrdem = new HashMap<Integer ,String >();
+		mapaOrdem.put( 1,"porNome");
+		mapaOrdem.put( 2,"porPreco");
+		mapaOrdem.put( 3,"porNomeReverso");
+		mapaOrdem.put( 4,"porPrecoReverso");
+		try {
+			list.sort((Comparator<? super Product>) Class.forName("util.MyComparator").
+				getMethod(mapaOrdem.get(sorttype)).invoke(Class.forName("util.MyComparator").getDeclaredConstructor().newInstance()));
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException | ClassNotFoundException | InstantiationException | NullPointerException e) {
+			//System.out.println(e.toString());// Resolver Null pointer
+			//e.printStackTrace();
 		}
     }
 }

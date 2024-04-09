@@ -2,10 +2,9 @@ package util;
 
 public enum Path {
 
-	ENTRADA("C:\\Users\\source.txt"),
-	SAIDA("C:\\Users\\out.txt");
+	ENTRADA("C:\\Users\\Cristiano\\Documents\\source.txt"),
+	SAIDA("C:\\Users\\Cristiano\\Documents\\out.txt");
 	String path;
-	
 	private Path(String path) {
 		this.path = path;
 	}

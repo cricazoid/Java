@@ -1,10 +1,12 @@
 package util;
 
 import java.io.Console;
+
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import util.InvalidMenuException;
 
 import beans.Product;
 /* Classe responsável por apresentar as informações para o usuário
@@ -12,11 +14,11 @@ import beans.Product;
  */
 public class Display {
 	//Variáveis, variables
-	UtilLista popuList = new UtilLista();
-	int sorttype = 0;
-	FileRendler fileRendler = new FileRendler();
-	Scanner scanner = new Scanner(System.in);
-	List <Product> list = popuList.retornaLista();
+	private UtilLista popuList = new UtilLista();
+	private int sorttype = 0;
+	private FileRendler fileRendler = new FileRendler();
+	private Scanner scanner = new Scanner(System.in);
+	private List <Product> list = popuList.retornaLista();
 	/* Construtor
 	 * Constructor
 	 */
@@ -29,6 +31,7 @@ public class Display {
 	public void apresenta() {
 	  if(list.size()>0) {
 		do {
+			System.out.println("sizeeeee "+list.size());
 			    menu();
 			    if( sorttype != 0) {
 			    	popuList.ordenaLista(list, sorttype);
@@ -54,7 +57,7 @@ public class Display {
 	 * Method waits the user action to continue
 	 */
 	public void esperarEnter() {
-		System.out.println("Aperte Enter para continuar:\n");
+		        System.out.println("Aperte Enter para continuar:\n");
 				try {
 			        System.in.read();
 			    } catch (IOException e) {
@@ -70,21 +73,29 @@ public class Display {
 				System.out.println("Ordenar produtos:\n");
 		        System.out.println("1-por nome, 2-por preço, 3-por nome(lista inversa)"
 				+ " 4-preço reverso(lista inversa)\n ");
-		        System.out.println("5 ou outra sair e escrever no arquivo.\n");
+		        System.out.println("5 para sair e escrever no arquivo.\n");
 		        try {
-		        	sorttype = Integer.parseInt(scanner.nextLine());
-	        	} catch (NumberFormatException e) {
+		        	sorttype = verificaNumero(scanner.nextLine());
+	        	} catch (InvalidMenuException  e ) {
                     System.out.println("Escolha um NÚMERO de 1 a 5!!");
-                    sorttype = 0;
                     scanner.reset();
 		        }
-		         if((sorttype < 1) || (sorttype > 5)) {
-			         System.out.println("Escolha um NÚMERO de 1 a 5!!");
-	          sorttype = 0;
-	          menu();
-		}
-		}while(sorttype == 0);
-	
+		 }while(sorttype == 0);	
+	}
+	/* Método que verifica se o número está no faixa desejada
+	 * Method that verifies if the number is in the range
+	 */
+	 public int verificaNumero(String sorttype) throws InvalidMenuException {
+		         int numero = 0;
+		         try {
+		              numero = Integer.parseInt(sorttype);
+		             }catch (NumberFormatException e) {
+				         return numero;
+					}
+		         if((numero < 1) || (numero > 5)) { 
+		        	 throw new InvalidMenuException("Escolha um NÚMERO de 1 a 5!!");  
+		         }
+		         return numero;
 	}
 
 }
