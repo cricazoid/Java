@@ -33,7 +33,7 @@ public class RendlerTeste {
 	public List <Product> leArquivo() {
 		List <Product> list = new ArrayList<>();
         path = Paths.get("C:/", "Users\\Cristiano\\Documents", "source.txt");
-        String content = "Erouuuuuuuuuuu";
+        String content = "";
 		try {
 			content = Files.readString(path);
 		} catch (IOException | UnsupportedOperationException e) {
@@ -51,15 +51,14 @@ public class RendlerTeste {
 	 * Method writes the data to the file returns true if written e false if not
 	 */
 	public Boolean escreve(String line) {
-       /* String path2  = path.SAIDA.getPath();
-        //true indica que o aruivo já existe e add, true the file exists and add the line
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path2,true))) {
-        	bw.write(line);
-        	bw.newLine();  
-        } catch (IOException e) {
-			System.out.println(e.getMessage());
-			return false;
-          }	*/
+          path = Paths.get("C:/", "Users\\Cristiano\\Documents", "out.txt");
+		  try {
+			Files.writeString(path, line, StandardOpenOption.APPEND);
+			Files.write(path, System.getProperty("line.separator").getBytes(), StandardOpenOption.APPEND);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return true;
 	}
 }

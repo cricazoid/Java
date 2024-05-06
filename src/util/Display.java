@@ -17,6 +17,7 @@ public class Display {
 	private UtilLista popuList = new UtilLista();
 	private int sorttype = 0;
 	private FileRendler fileRendler = new FileRendler();
+	private RendlerTeste rendlerTeste = new RendlerTeste();
 	private Scanner scanner = new Scanner(System.in);
 	private List <Product> list = popuList.retornaLista();
 	/* Construtor
@@ -42,8 +43,8 @@ public class Display {
 			        }
 					else {
 						for(Product p : list)
-			                fileRendler.escreve(p.toString());
-		                fileRendler.escreve("----------------------------------------------");
+			               rendlerTeste.escreve(p.toString()); // fileRendler.escreve(p.toString());
+						rendlerTeste.escreve("----------------------------------------------");
 					}
 			    }
 		} while (sorttype !=5);
@@ -97,5 +98,4 @@ public class Display {
 		         }
 		         return numero;
 	}
-
 }

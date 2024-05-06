@@ -66,7 +66,7 @@ public class Product {
      */
 	@Override
 	public String toString() {
-		return "[Nome= " + nome + ", preco= " + preco + ", total= "+total+"]";
+		return "Nome= " + nome + ", preco= " + preco + ", total= "+total;
 	}
 
 	
